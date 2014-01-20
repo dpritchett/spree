@@ -42,8 +42,10 @@ module Spree
       end
     end
 
+    # :url_encode exists in 1.8.7 through 2.1
     def build_tracking_url(tracking)
-      tracking_url.gsub(/:tracking/, tracking) unless tracking.blank? || tracking_url.blank?
+      return if tracking.blank? || tracking_url.blank?
+      tracking_url.gsub(/:tracking/, ERB::Util.url_encode(tracking))
     end
 
     def self.calculators
